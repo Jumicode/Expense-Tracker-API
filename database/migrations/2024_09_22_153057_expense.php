@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Expenses', function (Blueprint $table) {
+        Schema::create('expenses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('description');
             $table->string('category');
             $table->number('amount');
             $table->date('date');
-            $table->date('custom date');
+            $table->date('custom_date');
             $table->timestamps();
         });
     }
