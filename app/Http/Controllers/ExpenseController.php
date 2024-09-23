@@ -140,7 +140,7 @@ class ExpenseController extends Controller
             $expenses ->custom_date = $request->custom_date;
 
         $expenses->save();
-        
+
         $data = [
             'message' => 'Success',
             '$expenses' => $expenses,
@@ -169,5 +169,62 @@ class ExpenseController extends Controller
         ];
         return response()->json($data, 204);
     }
+
+    public function patch(Request $request, $id)
+    {
+     $expenses = Expense::find($id);
+     if (!$expenses) {
+         $data = [
+             'message' => 'Error',
+             'status' => 404
+         ];
+         return response()->json($data, 404);
+     }
+     $validator = Validator::make($request->all(), [
+            'title' => 'required|max:25',
+            'description' => 'required|max:500',
+            'category' => 'required|max:15',
+            'amout' => 'required',
+            'date' => 'required|date',
+            'custom_date'=> 'date'
+     ]);
+     if ($validator->fails()) {
+         $data = [
+             'message' => 'Error',
+             'errors' => $validator->errors(),
+             'status' => 400
+         ];
+         return response()->json($data, 400);
+     }
+     if ($request->has('title')) {
+         $expenses->title = $request->title;
+     }
+     if ($request->has('description')) {
+         $expenses->description = $request->description;
+     }
+     if ($request->has('category')) {
+         $expenses->category = $request->category;
+     }
+     if ($request->has('amout')) {
+         $expenses->amout = $request->amout;
+     }
+     if ($request->has('date')){
+         $expenses->date = $request->date;
+     }
+     if ($request->has('custom_date')){
+        $expenses->custom_date = $request->custom_date;
     }
+     $expenses->save();
+     $data = [
+         'message' => 'Success',
+         '$expenses' => $expenses,
+         'status' => 200
+     ];
+     return response()->json($data, 200);
+ }
+
+
+
+    
+}
 
