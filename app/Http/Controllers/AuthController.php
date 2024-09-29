@@ -51,7 +51,7 @@ class AuthController extends Controller
         return response()->json(auth()->user());
     }
 
-    // Cerrar sesión
+   
     public function logout()
     {
         auth()->logout();

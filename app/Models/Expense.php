@@ -9,14 +9,11 @@ class Expense extends Model
 {
     use HasFactory;
 
-protected $table = 'expenses';
+    protected $fillable = ['user_id', 'category', 'amount', 'description', 'date'];
 
-protected $fillable = [
-    'title',
-    'description',
-    'category',
-    'amount',
-    'date',
-    'custom_date'
-];
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
